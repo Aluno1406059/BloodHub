@@ -5,3 +5,6 @@
 ## 📦 Instalação
 
 ## 🧑‍💻 Autores
+ - Matheus Monteiro
+ - Matheus Neves
+ - Nicolas Martins
