@@ -2,7 +2,7 @@
 
 ## 🔧 Tecnologias Utilizadas
  - Tailwind CSS
- - TypeScript
+ - TypeScript, JavaScript
  - React (Vite)
  - IndexedDB via idb (client-side)
 
