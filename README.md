@@ -1,9 +1,9 @@
 # 🩸 BloodHub - Gerenciador de Hemocentros
 
 ## 🔧 Tecnologias Utilizadas
- - Tailwind CSS
  - TypeScript, JavaScript
  - React (Vite)
+ - Tailwind CSS
  - IndexedDB via idb (client-side)
 
 ## 📦 Instalação
