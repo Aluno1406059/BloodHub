@@ -1,7 +1,7 @@
 # 🩸 BloodHub - Gerenciador de Hemocentros
 
 ## 🔧 Tecnologias Utilizadas
- - TypeScript, JavaScript
+ - TypeScript
  - React (Vite)
  - Tailwind CSS
  - IndexedDB via idb (client-side)
