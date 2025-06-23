@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { CalendarIcon, Plus, Minus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-
+import { ptBR } from 'date-fns/locale';
 import { bloodTypes, addRecord } from '@/lib/db';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -23,23 +23,23 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 
 const formSchema = z.object({
-  cpf: z.string().min(11, { message: 'CPF must have at least 11 characters' }).max(14),
-  name: z.string().min(3, { message: 'Name is required' }),
+  cpf: z.string().min(11, { message: 'O CPF deve ter pelo menos 11 caracteres' }).max(14),
+  name: z.string().min(3, { message: 'O nome é obrigatório' }),
   age: z.string().refine((val) => {
     const age = parseInt(val);
     return !isNaN(age) && age >= 16 && age <= 120;
-  }, { message: 'Age must be between 16 and 120' }),
+  }, { message: 'A idade deve estar entre 16 e 120 anos' }),
   weight: z.string().refine((val) => {
     const weight = parseFloat(val);
     return !isNaN(weight) && weight >= 50;
-  }, { message: 'Weight must be at least 50kg' }),
-  bloodType: z.string().min(1, { message: 'Blood type is required' }),
+  }, { message: 'O peso deve ser de pelo menos 50kg' }),
+  bloodType: z.string().min(1, { message: 'O tipo sanguíneo é obrigatório' }),
   bags: z.string().refine((val) => {
     const bags = parseInt(val);
     return !isNaN(bags) && bags > 0;
-  }, { message: 'Number of bags must be positive' }),
-  date: z.date({ required_error: 'Date is required' }),
-  type: z.enum(['donation', 'reception'], { required_error: 'Type is required' }),
+  }, { message: 'O número de malas deve ser positivo' }),
+  date: z.date({ required_error: 'A data é obrigatória' }),
+  type: z.enum(['donation', 'reception'], { required_error: 'O tipo é obrigatório' }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -78,8 +78,8 @@ const RegisterPage = () => {
       await addRecord(record);
       
       toast({
-        title: `${data.type === 'donation' ? 'Donation' : 'Reception'} registered successfully!`,
-        description: `${data.bags} bags of ${data.bloodType} blood have been ${data.type === 'donation' ? 'added to' : 'removed from'} inventory.`,
+        title: `${data.type === 'donation' ? 'Donation' : 'Reception'} cadastrado com sucesso!`,
+        description: `${data.bags} bolsas de ${data.bloodType} sangue foi ${data.type === 'donation' ? 'adicionado a' : 'removido de'} inventário.`,
       });
       
       // Reset form
@@ -94,10 +94,10 @@ const RegisterPage = () => {
         type: activeTab,
       });
     } catch (error) {
-      console.error('Error adding record:', error);
+      console.error('Erro ao adicionar registro:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to register the record. Please try again.',
+        title: 'Erro',
+        description: 'Falha ao registrar o registro. Por favor, tente novamente.',
         variant: 'destructive',
       });
     }
@@ -111,17 +111,17 @@ const RegisterPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Register</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Registro</h2>
         <p className="text-muted-foreground">
-          Register a new blood donation or reception.
+          Registre uma nova doação ou recebimento de sangue.
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Blood Transaction Form</CardTitle>
+          <CardTitle>Formulário de Transação de Sangue</CardTitle>
           <CardDescription>
-            Fill out this form to register a blood donation or reception.
+            Preencha este formulário para registrar uma doação ou recepção de sangue.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -129,10 +129,10 @@ const RegisterPage = () => {
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="donation" className="flex items-center gap-2">
-                  <Plus className="h-4 w-4" /> Donation
+                  <Plus className="h-4 w-4" /> Doação
                 </TabsTrigger>
                 <TabsTrigger value="reception" className="flex items-center gap-2">
-                  <Minus className="h-4 w-4" /> Reception
+                  <Minus className="h-4 w-4" /> Recebimento
                 </TabsTrigger>
               </TabsList>
               
@@ -151,10 +151,10 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="name">Full Name</Label>
+                    <Label htmlFor="name">Nome Completo</Label>
                     <Input
                       id="name"
-                      placeholder="Enter donor's full name"
+                      placeholder="Digite o nome completo do doador"
                       {...form.register('name')}
                     />
                     {form.formState.errors.name && (
@@ -163,11 +163,11 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="age">Age</Label>
+                    <Label htmlFor="age">Idade</Label>
                     <Input
                       id="age"
                       type="number"
-                      placeholder="Enter age"
+                      placeholder="Insira a idade"
                       {...form.register('age')}
                     />
                     {form.formState.errors.age && (
@@ -176,12 +176,12 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="weight">Weight (kg)</Label>
+                    <Label htmlFor="weight">Peso (kg)</Label>
                     <Input
                       id="weight"
                       type="number"
                       step="0.1"
-                      placeholder="Enter weight in kg"
+                      placeholder="Insira o peso em kg"
                       {...form.register('weight')}
                     />
                     {form.formState.errors.weight && (
@@ -190,13 +190,13 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="bloodType">Blood Type</Label>
+                    <Label htmlFor="bloodType">Tipo sanguíneo</Label>
                     <Select 
                       onValueChange={(value) => form.setValue('bloodType', value)}
                       defaultValue={form.getValues('bloodType')}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select blood type" />
+                        <SelectValue placeholder="Selecione o tipo sanguíneo" />
                       </SelectTrigger>
                       <SelectContent>
                         {bloodTypes.map((type) => (
@@ -212,12 +212,12 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="bags">Number of Bags</Label>
+                    <Label htmlFor="bags">Número de bolsas</Label>
                     <Input
                       id="bags"
                       type="number"
                       min="1"
-                      placeholder="Enter number of bags"
+                      placeholder="Insira o número de bolsas"
                       {...form.register('bags')}
                     />
                     {form.formState.errors.bags && (
@@ -226,7 +226,7 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="date">Date</Label>
+                    <Label htmlFor="date">Data</Label>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -235,9 +235,9 @@ const RegisterPage = () => {
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
                           {form.getValues('date') ? (
-                            format(form.getValues('date'), 'PPP')
+                            format(form.getValues('date'), 'dd/MM/yyyy')
                           ) : (
-                            <span>Pick a date</span>
+                            <span>Escolha uma data</span>
                           )}
                         </Button>
                       </PopoverTrigger>
@@ -249,6 +249,7 @@ const RegisterPage = () => {
                           disabled={(date) => date > new Date()}
                           initialFocus
                           className="p-3 pointer-events-auto"
+                          locale={ptBR}
                         />
                       </PopoverContent>
                     </Popover>
@@ -274,10 +275,10 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="name">Full Name</Label>
+                    <Label htmlFor="name">Nome Completo</Label>
                     <Input
                       id="name"
-                      placeholder="Enter recipient's full name"
+                      placeholder="Digite o nome completo do receptor"
                       {...form.register('name')}
                     />
                     {form.formState.errors.name && (
@@ -286,11 +287,11 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="age">Age</Label>
+                    <Label htmlFor="age">Idade</Label>
                     <Input
                       id="age"
                       type="number"
-                      placeholder="Enter age"
+                      placeholder="Insira a idade"
                       {...form.register('age')}
                     />
                     {form.formState.errors.age && (
@@ -299,12 +300,12 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="weight">Weight (kg)</Label>
+                    <Label htmlFor="weight">Peso (kg)</Label>
                     <Input
                       id="weight"
                       type="number"
                       step="0.1"
-                      placeholder="Enter weight in kg"
+                      placeholder="Insira o peso em kg"
                       {...form.register('weight')}
                     />
                     {form.formState.errors.weight && (
@@ -313,13 +314,13 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="bloodType">Blood Type</Label>
+                    <Label htmlFor="bloodType">Tipo sanguíneo</Label>
                     <Select 
                       onValueChange={(value) => form.setValue('bloodType', value)}
                       defaultValue={form.getValues('bloodType')}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select blood type" />
+                        <SelectValue placeholder="Selecione o tipo sanguíneo" />
                       </SelectTrigger>
                       <SelectContent>
                         {bloodTypes.map((type) => (
@@ -335,12 +336,12 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="bags">Number of Bags</Label>
+                    <Label htmlFor="bags">Número de bolsas</Label>
                     <Input
                       id="bags"
                       type="number"
                       min="1"
-                      placeholder="Enter number of bags"
+                      placeholder="Insira o número de bolsas"
                       {...form.register('bags')}
                     />
                     {form.formState.errors.bags && (
@@ -349,7 +350,7 @@ const RegisterPage = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="date">Date</Label>
+                    <Label htmlFor="date">Data</Label>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
@@ -358,9 +359,9 @@ const RegisterPage = () => {
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
                           {form.getValues('date') ? (
-                            format(form.getValues('date'), 'PPP')
+                            format(form.getValues('date'), 'dd/MM/yyyy')
                           ) : (
-                            <span>Pick a date</span>
+                            <span>Escolha uma data</span>
                           )}
                         </Button>
                       </PopoverTrigger>
@@ -372,6 +373,7 @@ const RegisterPage = () => {
                           disabled={(date) => date > new Date()}
                           initialFocus
                           className="p-3 pointer-events-auto"
+                          locale={ptBR}
                         />
                       </PopoverContent>
                     </Popover>
@@ -385,7 +387,7 @@ const RegisterPage = () => {
 
             <CardFooter className="px-0 pt-6 pb-0 flex justify-end">
               <Button type="submit">
-                Register {activeTab === 'donation' ? 'Donation' : 'Reception'}
+                Registrar {activeTab === 'donation' ? 'Doação' : 'Recepção'}
               </Button>
             </CardFooter>
           </form>

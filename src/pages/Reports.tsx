@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { Calendar, Plus, Minus, FileText } from 'lucide-react';
 import { getRecords, BloodRecord } from '@/lib/db';
-
+import { ptBR } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -50,23 +50,23 @@ const ReportsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Reports</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Relatórios</h2>
         <p className="text-muted-foreground">
-          View and filter records of blood donations and receptions.
+          Visualize e filtre registros de doações e recepções de sangue.
         </p>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle className="flex justify-between items-center">
-            <span>Filter Records</span>
-            <Button variant="ghost" onClick={handleClearFilters}>Clear Filters</Button>
+            <span>Filtrar Registros</span>
+            <Button variant="ghost" onClick={handleClearFilters}>Limpar Filtros</Button>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <Label htmlFor="start-date">Start Date</Label>
+              <Label htmlFor="start-date">Data Inicial</Label>
               <div className="mt-1">
                 <Popover>
                   <PopoverTrigger asChild>
@@ -77,9 +77,9 @@ const ReportsPage = () => {
                     >
                       <Calendar className="mr-2 h-4 w-4" />
                       {startDate ? (
-                        format(startDate, 'PPP')
+                        format(startDate, 'dd/MM/yyyy')
                       ) : (
-                        <span>Pick a start date</span>
+                        <span>Escolha uma data de início</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -90,6 +90,7 @@ const ReportsPage = () => {
                       onSelect={setStartDate}
                       initialFocus
                       className="p-3 pointer-events-auto"
+                      locale={ptBR}
                     />
                   </PopoverContent>
                 </Popover>
@@ -97,7 +98,7 @@ const ReportsPage = () => {
             </div>
 
             <div>
-              <Label htmlFor="end-date">End Date</Label>
+              <Label htmlFor="end-date">Data Final</Label>
               <div className="mt-1">
                 <Popover>
                   <PopoverTrigger asChild>
@@ -108,9 +109,9 @@ const ReportsPage = () => {
                     >
                       <Calendar className="mr-2 h-4 w-4" />
                       {endDate ? (
-                        format(endDate, 'PPP')
+                        format(endDate, 'dd/MM/yyyy')
                       ) : (
-                        <span>Pick an end date</span>
+                        <span>Escolha uma data final</span>
                       )}
                     </Button>
                   </PopoverTrigger>
@@ -122,6 +123,7 @@ const ReportsPage = () => {
                       disabled={(date) => startDate ? date < startDate : false}
                       initialFocus
                       className="p-3 pointer-events-auto"
+                      locale={ptBR}
                     />
                   </PopoverContent>
                 </Popover>
@@ -130,7 +132,7 @@ const ReportsPage = () => {
 
             <div className="flex items-end">
               <Button onClick={handleFilter} className="w-full">
-                Apply Filters
+                Aplicar Filtros
               </Button>
             </div>
           </div>
@@ -140,9 +142,9 @@ const ReportsPage = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex justify-between items-center">
-            <span>Blood Transaction Records</span>
+            <span>Registros de transações de sangue</span>
             <span className="text-sm font-normal text-muted-foreground">
-              {records.length} records found
+              {records.length} registros encontrados
             </span>
           </CardTitle>
         </CardHeader>
@@ -156,9 +158,9 @@ const ReportsPage = () => {
           ) : records.length === 0 ? (
             <div className="text-center py-10">
               <FileText className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-semibold text-gray-900">No records found</h3>
+              <h3 className="mt-2 text-sm font-semibold text-gray-900">Nenhum registro encontrado</h3>
               <p className="mt-1 text-sm text-gray-500">
-                No blood transaction records match your criteria.
+                Nenhum registro de transação de sangue corresponde aos seus critérios.
               </p>
             </div>
           ) : (
@@ -199,7 +201,7 @@ const ReportsPage = () => {
                           <span>bags</span>
                         </Badge>
                         <span className="text-sm text-gray-500">
-                          {format(date, 'PPP')}
+                          {format(date, 'dd/MM/yyyy')}
                         </span>
                       </div>
                     </div>

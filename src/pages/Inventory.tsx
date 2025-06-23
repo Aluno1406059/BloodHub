@@ -32,10 +32,9 @@ const InventoryPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Blood Bag Inventory</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Bolsas de sangue disponíveis</h2>
         <p className="text-muted-foreground">
-          Current blood bag inventory levels by blood type.
-        </p>
+Níveis atuais de estoque de bolsas de sangue por tipo sanguíneo.        </p>
       </div>
 
       {isLoading ? (
@@ -57,7 +56,7 @@ const InventoryPage = () => {
               <Card key={type} className="blood-type-card">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-center text-lg">
-                    <span className="text-bloodred font-bold">{type}</span> Type
+                    Tipo <span className="text-bloodred font-bold">{type}</span> 
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -66,7 +65,7 @@ const InventoryPage = () => {
                       {bloodInventory.quantity}
                     </div>
                     <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                      Bags Available
+                      Bolsas disponíveis
                     </p>
                   </div>
                 </CardContent>
@@ -79,20 +78,20 @@ const InventoryPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
         <Card className="col-span-1 md:col-span-3">
           <CardHeader>
-            <CardTitle>Inventory Legend</CardTitle>
+            <CardTitle>Legenda do inventário</CardTitle>
           </CardHeader>
           <CardContent className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center">
               <div className="w-4 h-4 bg-red-100 border border-red-300 rounded mr-2"></div>
-              <span className="text-sm">Critical (0-2 bags)</span>
+              <span className="text-sm">Critico (0-2 bolsas)</span>
             </div>
             <div className="flex items-center">
               <div className="w-4 h-4 bg-yellow-100 border border-yellow-300 rounded mr-2"></div>
-              <span className="text-sm">Low (3-5 bags)</span>
+              <span className="text-sm">Baixo (3-5 bolsas)</span>
             </div>
             <div className="flex items-center">
               <div className="w-4 h-4 bg-green-100 border border-green-300 rounded mr-2"></div>
-              <span className="text-sm">Good Supply (6+ bags)</span>
+              <span className="text-sm">Bom (6+ bolsas)</span>
             </div>
           </CardContent>
         </Card>
