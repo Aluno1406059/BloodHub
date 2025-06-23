@@ -12,9 +12,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { to: '/', icon: <List className="h-5 w-5" />, label: 'Inventory' },
-    { to: '/register', icon: <Calendar className="h-5 w-5" />, label: 'Register' },
-    { to: '/reports', icon: <FileText className="h-5 w-5" />, label: 'Reports' }
+    { to: '/', icon: <List className="h-5 w-5" />, label: 'Inventario' },
+    { to: '/register', icon: <Calendar className="h-5 w-5" />, label: 'Registros' },
+    { to: '/reports', icon: <FileText className="h-5 w-5" />, label: 'Relatórios' }
   ];
 
   return (
@@ -26,7 +26,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
             <div className="h-8 w-8 bg-bloodred rounded-full flex items-center justify-center mr-2">
               <span className="text-white font-bold text-sm">B+</span>
             </div>
-            <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Blood Center Manager</h1>
+            <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Blood Hub</h1>
           </div>
           
           <button 
